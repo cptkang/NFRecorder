@@ -10,14 +10,13 @@ const digitalFont = Orbitron({ subsets: ['latin'], weight: '700' });
 
 function formatDuration(ms: number) {
     if (ms < 0) ms = 0;
-    const seconds = Math.floor((ms / 1000) % 60);
     const minutes = Math.floor((ms / (1000 * 60)) % 60);
     const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
     const days = Math.floor(ms / (1000 * 60 * 60 * 24));
 
     return {
         days: days.toString().padStart(3, '0'),
-        time: `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        time: `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
     };
 }
 
