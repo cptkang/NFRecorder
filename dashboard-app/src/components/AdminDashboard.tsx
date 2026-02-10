@@ -87,32 +87,27 @@ export default function AdminDashboard() {
     const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setForm((prev: any) => {
-            if (!prev.targetDate) return { ...prev, [name]: value };
-
-            const newStart = new Date(value);
-            const targetDate = new Date(prev.targetDate);
-
-            const diffMs = targetDate.getTime() - newStart.getTime();
-            const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-            // If updating LastFailure, also update StartTime? 
-            // Previous user request treated them somewhat separately but "linked logic" implies sync.
-            // I will sync them for this specific "Calculator" interaction, but let generic handle keep them separate if just editing one?
-            // User: "modify last failure date -> modify target goal".
-
-            const updates: any = { [name]: value };
-            updates.targetDays = days > 0 ? days : 0;
-
-            // If I change LastFailure, should I change StartTime?
-            // Usually yes for "Zero Point".
+            // 1. Last Failure Date: Independent (Does not affect Target Days or Start Time)
             if (name === 'lastFailureISO') {
-                updates.startTimeISO = value;
-            }
-            if (name === 'startTimeISO') {
-                updates.lastFailureISO = value;
+                return { ...prev, [name]: value };
             }
 
-            return { ...prev, ...updates };
+            // 2. Start Time: Affects Target Days (if Target Date exists)
+            if (name === 'startTimeISO' && prev.targetDate) {
+                const newStart = new Date(value);
+                const targetDate = new Date(prev.targetDate);
+
+                const diffMs = targetDate.getTime() - newStart.getTime();
+                const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+                return {
+                    ...prev,
+                    [name]: value,
+                    targetDays: days > 0 ? days : 0
+                };
+            }
+
+            return { ...prev, [name]: value };
         });
     };
 
@@ -126,10 +121,11 @@ export default function AdminDashboard() {
             if (form.startTimeISO) {
                 payload.startTime = new Date(form.startTimeISO).toISOString();
             }
-            if (form.lastFailureISO) {
+            // Handle lastFailureISO (allow null if cleared)
+            if (typeof form.lastFailureISO === 'string') {
                 payload.lastFailure = {
-                    ...payload.lastFailure,
-                    date: new Date(form.lastFailureISO).toISOString()
+                    ...(payload.lastFailure || {}),
+                    date: form.lastFailureISO ? new Date(form.lastFailureISO).toISOString() : null
                 };
             }
             delete payload.startTimeISO;

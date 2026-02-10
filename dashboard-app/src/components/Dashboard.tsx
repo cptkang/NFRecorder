@@ -4,6 +4,9 @@ import styles from '@/styles/Dashboard.module.css';
 import { useEffect, useState } from 'react';
 import { useStatus } from '@/hooks/useStatus';
 import KBLogo from './KBLogo';
+import { Orbitron } from 'next/font/google';
+
+const digitalFont = Orbitron({ subsets: ['latin'], weight: '700' });
 
 function formatDuration(ms: number) {
     if (ms < 0) ms = 0;
@@ -58,6 +61,8 @@ export default function Dashboard() {
     const { days, time } = formatDuration(elapsed);
     const targetMs = data.targetDays * 24 * 60 * 60 * 1000;
     const progress = Math.min((elapsed / targetMs) * 100, 100);
+    const remainingMs = targetMs - elapsed;
+    const remainingDays = Math.ceil(remainingMs / (1000 * 60 * 60 * 24));
 
     // Dates
     const startDate = new Date(data.startTime);
@@ -90,7 +95,7 @@ export default function Dashboard() {
                 {/* Main Counter */}
                 <div className={styles.displayPanel}>
                     <div className={styles.counterLabel}>무장애 누적 일수</div>
-                    <div className={styles.counterValue}>
+                    <div className={`${styles.counterValue} ${digitalFont.className}`}>
                         {days} <span className={styles.daysUnit}>DAYS</span> {time}
                     </div>
                 </div>
@@ -99,12 +104,12 @@ export default function Dashboard() {
                 <div className={styles.progressSection}>
                     {/* Digital Clock */}
                     <div style={{ width: '100%', textAlign: 'center' }}>
-                        <div className={styles.digitalClock}>{currentTime}</div>
+                        <div className={`${styles.digitalClock} ${digitalFont.className}`}>{currentTime}</div>
                     </div>
 
                     <div className={styles.progressHeader}>
                         <span>목표 달성률</span>
-                        <span>{progress.toFixed(0)}%</span>
+                        <span>{remainingDays > 0 ? `D-${remainingDays}` : '목표 달성'} ({progress.toFixed(0)}%)</span>
                     </div>
                     <div className={styles.progressBarTrack}>
                         <div
@@ -114,11 +119,11 @@ export default function Dashboard() {
                     </div>
                     <div className={styles.progressStats}>
                         <div className={styles.statLabel}>
-                            목표시간: <span className={styles.statValue}>{data.targetDays} DAYS</span>
+                            목표시간: <span className={`${styles.statValue} ${digitalFont.className}`}>{data.targetDays} DAYS</span>
                             {data.targetDate && <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', color: '#888' }}>({data.targetDate})</span>}
                         </div>
                         <div className={styles.statLabel} style={{ textAlign: 'right' }}>
-                            달성시간: <span className={styles.statValue} style={{ color: '#ff5f1f' }}>{Math.floor(elapsed / (1000 * 60 * 60 * 24))} DAYS</span>
+                            달성시간: <span className={`${styles.statValue} ${digitalFont.className}`} style={{ color: '#ff5f1f' }}>{Math.floor(elapsed / (1000 * 60 * 60 * 24))} DAYS</span>
                         </div>
                     </div>
                 </div>
@@ -130,11 +135,11 @@ export default function Dashboard() {
                         <span className={styles.footerValue}>{formatDate(startDate)}</span>
                     </div>
                     <div className={styles.footerItem}>
-                        <span className={styles.footerLabel}>확정일(현재)</span>
+                        <span className={styles.footerLabel}>현재날짜</span>
                         <span className={styles.footerValue}>{formatDate(currentDate)}</span>
                     </div>
                     <div className={styles.footerItem}>
-                        <span className={styles.footerLabel}>직전 장애 종료일</span>
+                        <span className={styles.footerLabel}>직전 장애일</span>
                         <span className={styles.footerValue}>
                             {data.lastFailure?.date ? formatDate(new Date(data.lastFailure.date)) : '-'}
                         </span>
