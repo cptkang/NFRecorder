@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "Next.js: Chrome",
+            "request": "launch",
+            "url": "http://localhost:3000/",
+            "webRoot": "${workspaceFolder}/dashboard-app"
+        },
+        {
+            "name": "Next.js: Server",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/dashboard-app",
+            "program": "${workspaceFolder}/dashboard-app/node_modules/next/dist/bin/next",
+            "args": [
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        }
+    ]
+}
