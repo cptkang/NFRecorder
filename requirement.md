@@ -27,15 +27,16 @@
     - 현재 서비스 상태(Normal, Warning, Critical)를 수동으로 전환한다.
     - 'Critical(장애)' 선택 시, 대시보드 카운터는 즉시 멈추고 화면은 적색 테마로 변경된다.
 - **기록 리셋 및 저장**:
-    - **SAVE SETTINGS (상단 고정)**: 변경된 설정을 저장한다. 스크롤과 무관하게 상단에 고정되어 접근성을 높인다.
+    - **SAVE SETTINGS (상단 고정)**: 변경된 설정을 저장하고 대시보드 화면으로 이동한다. 스크롤과 무관하게 상단에 고정되어 접근성을 높인다.
     - **RESET COUNTER**: 장애 발생 시 기록을 초기화하고 히스토리에 저장한다.
 - **텍스트 관리**: 대시보드 상단 타이틀(`Dashboard Title`)을 수정한다.
+- **네비게이션**: 상단 "Admin Console" 텍스트 클릭 시 대시보드 화면으로 이동한다.
 
 ## 3. UI/UX 요구사항 (Design Requirements)
 
 ### 3.1 비주얼 스타일 (KB TechGroup Theme)
 - **브랜딩 (KB Kookmin Bank)**:
-    - **로고**: 좌측 상단에 KB 국민은행 CI 이미지(JPG) 적용.
+    - **로고**: 좌측 상단에 KB 국민은행 CI 이미지(JPG) 적용. 클릭 시 관리자 페이지로 이동한다.
     - **컬러**: KB 시그니처 컬러(Yellow/Gray) 및 Dark Blue 테마 적용.
 - **테마 (TechGroup)**:
     - **배경**: 짙은 남색 계열의 글래스모피즘(Glassmorphism) 디자인.

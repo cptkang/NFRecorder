@@ -1,11 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useStatus } from '@/hooks/useStatus';
 import styles from '@/styles/Admin.module.css';
 
 export default function AdminDashboard() {
     const { data, loading, mutate } = useStatus();
+    const router = useRouter();
     const [form, setForm] = useState<any>({});
     const [saving, setSaving] = useState(false);
 
@@ -138,6 +141,7 @@ export default function AdminDashboard() {
             });
             await mutate();
             alert('Settings Saved');
+            router.push('/');
         } catch (e) {
             alert('Error saving settings');
         } finally {
@@ -172,7 +176,9 @@ export default function AdminDashboard() {
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <h1>Admin Console</h1>
+                <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <h1>Admin Console</h1>
+                </Link>
                 <button className={`${styles.button} ${styles.saveButton}`} onClick={saveSettings} disabled={saving}>
                     {saving ? 'Saving...' : 'SAVE SETTINGS'}
                 </button>

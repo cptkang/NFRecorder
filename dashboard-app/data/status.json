@@ -3,7 +3,7 @@
   "targetDays": 360,
   "targetDate": "2026-12-31",
   "status": "normal",
-  "serviceName": "테크그룹 인프라본부 무장애 대시보드",
+  "serviceName": "테크그룹 인프라본부 무장애 기록판",
   "lastFailure": {
     "date": null,
     "reason": ""
@@ -13,5 +13,5 @@
     "achievedDate": "2026-02-01T00:00:00+09:00"
   },
   "history": [],
-  "serverTime": "2026-02-10T08:39:57.213Z"
+  "serverTime": "2026-02-13T06:57:22.892Z"
 }

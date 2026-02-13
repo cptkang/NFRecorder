@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useStatus } from '@/hooks/useStatus';
 import KBLogo from './KBLogo';
 import { Orbitron } from 'next/font/google';
+import Link from 'next/link';
 
 const digitalFont = Orbitron({ subsets: ['latin'], weight: '700' });
 
@@ -82,7 +83,9 @@ export default function Dashboard() {
                 {/* Header */}
                 <header className={styles.header}>
                     <div className={styles.branding}>
-                        <img src="/images/kb_logo.jpg" alt="KB Kookmin Bank" style={{ height: '50px', objectFit: 'contain' }} />
+                        <Link href="/admin">
+                            <img src="/images/kb_logo.jpg" alt="KB Kookmin Bank" style={{ height: '50px', objectFit: 'contain', cursor: 'pointer' }} />
+                        </Link>
                     </div>
                     <h1 className={styles.pageTitle}>{data.serviceName}</h1>
                     <div className={styles.statusContainer}>
